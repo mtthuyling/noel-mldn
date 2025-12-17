@@ -103,10 +103,10 @@
 
     if (type === 'gold_glow') {
         // Bóng đèn lấp lánh: Tâm trắng tỏa ra vàng kim
-        const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, 60);
-        grd.addColorStop(0, '#FFFFFF'); // Tâm sáng trắng
-        grd.addColorStop(0.2, '#FFFF00'); // Vàng tươi
-        grd.addColorStop(0.5, 'rgba(255, 215, 0, 0.6)'); 
+       const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, 64);
+        grd.addColorStop(0, '#FFFFFF'); // Tâm trắng cực sáng
+        grd.addColorStop(0.1, '#FFF500'); // Vàng rực
+        grd.addColorStop(0.4, 'rgba(255, 215, 0, 0.3)'); // Quầng sáng mờ
         grd.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = grd; ctx.fillRect(0,0,128,128);
 
@@ -195,8 +195,9 @@
                 const y = h - CONFIG.treeHeight / 2;
                 let radiusRatio = (type === 'gold') ? Math.sqrt(Math.random()) : 0.9 + Math.random()*0.1;
                 const maxR = (1 - (h / CONFIG.treeHeight)) * CONFIG.treeBaseRadius;
-                const r = maxR * radiusRatio; 
+                const r = maxR * radiusRatio + (Math.random() - 0.5) * 5; // Tăng độ lệch r
                 const theta = Math.random() * Math.PI * 2;
+                // Tạo cảm giác các hạt đang bay lơ lửng xung quanh trục
                 pTreeTargets.push(r * Math.cos(theta), y, r * Math.sin(theta));
 
                 // --- EXPLODE Vandiep ---
