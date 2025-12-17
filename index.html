@@ -285,7 +285,9 @@
         function createDecorations() {
             // MERRY CHRISTMAS Vandiep
             const canvas = document.createElement('canvas');
-            canvas.width = 1024; canvas.height = 256;
+            // Nếu Plane là 90x15 (tỉ lệ 6:1), hãy để Canvas là 1536x256 hoặc 1024x170
+            canvas.width = 1500; 
+            canvas.height = 250;
             const ctx = canvas.getContext('2d');
             ctx.font = 'bold italic 90px "Times New Roman"';
             ctx.fillStyle = '#FFD700'; ctx.textAlign = 'center';
@@ -293,7 +295,7 @@
             ctx.fillText("Mlinh DuyNgoc RECAP 2025", 512, 130);
             const tex = new THREE.CanvasTexture(canvas);
             const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, blending: THREE.AdditiveBlending });
-            titleMesh = new THREE.Mesh(new THREE.PlaneGeometry(60, 15), mat);
+            titleMesh = new THREE.Mesh(new THREE.PlaneGeometry(90, 15), mat);
             titleMesh.position.set(0, 50, 0);
             scene.add(titleMesh);
 
