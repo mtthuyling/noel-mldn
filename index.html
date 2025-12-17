@@ -283,19 +283,35 @@
         }
 
         function createDecorations() {
-            // MERRY CHRISTMAS Vandiep
-            const canvas = document.createElement('canvas');
-            canvas.width = 1024; canvas.height = 256;
-            const ctx = canvas.getContext('2d');
-            ctx.font = 'bold italic 90px "Times New Roman"';
-            ctx.fillStyle = '#FFD700'; ctx.textAlign = 'center';
-            ctx.shadowColor = "#FF0000"; ctx.shadowBlur = 40; 
-            ctx.fillText("Mlinh DuyNgoc RECAP 2025", 512, 130);
-            const tex = new THREE.CanvasTexture(canvas);
-            const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, blending: THREE.AdditiveBlending });
-            titleMesh = new THREE.Mesh(new THREE.PlaneGeometry(60, 15), mat);
-            titleMesh.position.set(0, 50, 0);
-            scene.add(titleMesh);
+        // MERRY CHRISTMAS - Căn chỉnh lại bởi Gemini
+        const canvas = document.createElement('canvas');
+        // Tỷ lệ 6:1 (1536 / 256 = 6)
+        canvas.width = 1536; 
+        canvas.height = 256;
+        const ctx = canvas.getContext('2d');
+
+        // 1. Căn chỉnh Font: Giảm xuống 80px để chuỗi dài không bị tràn
+        ctx.font = 'bold italic 80px "Times New Roman"';
+        ctx.fillStyle = '#FFD700'; 
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle'; // Căn giữa theo chiều dọc
+        ctx.shadowColor = "#FF0000"; 
+        ctx.shadowBlur = 40; 
+
+        // 2. Căn giữa chính xác: 1536 / 2 = 768 | 256 / 2 = 128
+        ctx.fillText("Mlinh DuyNgoc RECAP 2025", 768, 128); 
+
+        const tex = new THREE.CanvasTexture(canvas);
+        const mat = new THREE.MeshBasicMaterial({ 
+            map: tex, 
+            transparent: true, 
+            blending: THREE.AdditiveBlending 
+        });
+
+        // 3. Khớp tỷ lệ Plane với Canvas (90 / 15 = 6)
+        titleMesh = new THREE.Mesh(new THREE.PlaneGeometry(90, 15), mat);
+        titleMesh.position.set(0, 55, 0); // Đẩy lên 55 để không đè vào cây
+        scene.add(titleMesh);
 
             // STAR Vandiep
             const starCanvas = document.createElement('canvas');
