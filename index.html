@@ -283,20 +283,26 @@
         }
 
         function createDecorations() {
-            // MERRY CHRISTMAS Vandiep
+            // MERRY CHRISTMAS - Căn chỉnh lại bởi Gemini
             const canvas = document.createElement('canvas');
-            // Nếu Plane là 90x15 (tỉ lệ 6:1), hãy để Canvas là 1536x256 hoặc 1024x170
             canvas.width = 1536; 
             canvas.height = 256;
             const ctx = canvas.getContext('2d');
-            ctx.font = 'bold italic 90px "Times New Roman"';
-            ctx.fillStyle = '#FFD700'; ctx.textAlign = 'center';
-            ctx.shadowColor = "#FF0000"; ctx.shadowBlur = 40; 
-            ctx.fillText("Mlinh DuyNgoc RECAP 2025", 512, 130);
+            ctx.font = 'bold italic 80px "Times New Roman"';
+            ctx.fillStyle = '#FFD700'; 
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle'; // Căn giữa theo chiều dọc
+            ctx.shadowColor = "#FF0000"; 
+            ctx.shadowBlur = 40; 
+            ctx.fillText("Mlinh DuyNgoc RECAP 2025", 768, 128); 
             const tex = new THREE.CanvasTexture(canvas);
-            const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, blending: THREE.AdditiveBlending });
+            const mat = new THREE.MeshBasicMaterial({ 
+                map: tex, 
+                transparent: true, 
+                blending: THREE.AdditiveBlending 
+            });
             titleMesh = new THREE.Mesh(new THREE.PlaneGeometry(90, 15), mat);
-            titleMesh.position.set(0, 50, 0);
+            titleMesh.position.set(0, 55, 0); 
             scene.add(titleMesh);
 
             // STAR Vandiep
