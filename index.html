@@ -103,12 +103,15 @@
 
     if (type === 'gold_glow') {
         // Bóng đèn lấp lánh: Tâm trắng tỏa ra vàng kim
-       const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, 64);
-        grd.addColorStop(0, '#FFFFFF'); // Tâm trắng cực sáng
-        grd.addColorStop(0.1, '#FFF500'); // Vàng rực
-        grd.addColorStop(0.4, 'rgba(255, 215, 0, 0.3)'); // Quầng sáng mờ
+       // Tạo bóng đèn có chiều sâu
+        const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, 64);
+        grd.addColorStop(0, '#FFFFFF');     // Tâm bóng đèn sáng trắng (điểm nóng)
+        grd.addColorStop(0.2, '#FFFFBC');   // Màu vàng nhạt rực rỡ
+        grd.addColorStop(0.4, '#FFD700');   // Màu vàng kim đặc trưng
+        grd.addColorStop(0.7, 'rgba(255, 165, 0, 0.2)'); // Quầng sáng (Glow) tỏa ra
         grd.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = grd; ctx.fillRect(0,0,128,128);
+        ctx.fillStyle = grd; 
+        ctx.fillRect(0, 0, 128, 128);
 
     } else if (type === 'red_light') {
         const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, 50);
@@ -138,9 +141,9 @@
         // 2. SYSTEM CONFIG Vandiep
         // ==========================================
         const CONFIG = {
-            goldCount: 3000,
-            redCount: 500,
-            giftCount: 200,
+            goldCount: 6000,    // Tăng mạnh để tạo độ dày cho bóng đèn
+            redCount: 800,     // Tăng số lượng quả cầu trang trí
+            giftCount: 300,
             explodeRadius: 65,  
             photoOrbitRadius: 25,
             treeHeight: 70,
@@ -363,26 +366,23 @@
     const count = positions.length / 3;
     
     if (targetState === 'TREE') {
-        group.rotation.y += 0.003;
-        for(let i=0; i<count; i++) {
-            let brightness = 1.0;
-            if(type === 'gold') {
-                // Hiệu ứng tia chớp lấp lánh mạnh cho hạt vàng (Bóng đèn)
-                let sparkle = Math.pow(Math.sin(time * 5 + phases[i] * 10), 12); 
-                brightness = 0.7 + sparkle * 4.0; 
-                sizes[i] = baseSize * (1.0 + sparkle * 1.5); // Hạt to ra khi lóe sáng
-            } else if(type === 'gift') {
-                // Quà Bling Bling: Nhấp nháy theo nhịp chậm hơn
-                brightness = 0.8 + 0.4 * Math.sin(time * 2 + phases[i]);
-                sizes[i] = baseSize * (1.1);
-            } else {
-                brightness = 0.6 + 0.4 * Math.sin(time * 3 + phases[i]);
-                sizes[i] = baseSize;
-            }
-            colors[i*3] = baseColor.r * brightness;
-            colors[i*3+1] = baseColor.g * brightness;
-            colors[i*3+2] = baseColor.b * brightness;
+        group.rotation.y += 0.005;
+       for(let i=0; i<count; i++) {
+        let brightness = 1.0;
+        if(type === 'gold') {
+            // Hiệu ứng "Bóng đèn nhấp nháy" cực mạnh
+            // Dùng hàm lũy thừa bậc 15 để tạo tia chớp lóe sáng cực ngắn
+            let twinkle = Math.pow(Math.sin(time * (2 + phases[i] * 0.5) + phases[i]), 15);
+            brightness = 0.3 + twinkle * 6.0; // Bình thường mờ, khi lóe thì cực sáng
+            sizes[i] = baseSize * (0.8 + twinkle * 2.0); // Bóng đèn to ra khi sáng
+        } else {
+            brightness = 0.7 + 0.3 * Math.sin(time * 2 + phases[i]);
+            sizes[i] = baseSize;
         }
+        colors[i*3] = baseColor.r * brightness;
+        colors[i*3+1] = baseColor.g * brightness;
+        colors[i*3+2] = baseColor.b * brightness;
+    }
     } else if (targetState === 'HEART') {
         // ... (Giữ nguyên logic HEART cũ của bạn)
         for(let i=0; i<count; i++) {
